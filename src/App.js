@@ -7,9 +7,25 @@ export default class App extends Component {
   
   constructor() {
     super();
+    this.state = {
+      gifs : [],
+    }
   } 
 
+  componentDidMount(){
+    //simple way to make web requests. uses js promises to handle results
+    fetch('http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC')
+      .then(response => response.json())
+      .then(responseData => {
+        this.setState({ gifs : responseData.data });
+      })
+      .catch(error => {
+        console.log("error fetching and parsing data", error);
+      });
+  }
+
   render() { 
+    console.log(this.state.gifs);
     return (
       <div>
         <div className="main-header">

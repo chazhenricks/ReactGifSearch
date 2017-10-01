@@ -10,6 +10,7 @@ export default class App extends Component {
     super();
     this.state = {
       gifs : [],
+      loading: true,
     }
   } 
 
@@ -24,7 +25,8 @@ export default class App extends Component {
     .then(response => {
       this.setState({
         //first .data is the actual data axios returns in a get request. second .data is to access the data from the actual giphy call
-        gifs: response.data.data
+        gifs: response.data.data,
+        loading: false,
       })
     })
     .catch(error => {
@@ -57,7 +59,11 @@ export default class App extends Component {
           </div>   
         </div>    
         <div className="main-content">
-          <GifList data={this.state.gifs}/>
+          {
+            (this.state.loading)
+            ?<p>Loading ... </p>
+            : <GifList data={this.state.gifs}/>
+          }
         </div>
       </div>
     );

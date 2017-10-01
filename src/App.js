@@ -16,19 +16,10 @@ export default class App extends Component {
   //Example usin Axios to gather data from an API
   //axios automatically returns response in JSON
   componentDidMount(){
-    axios.get('http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC')
-    .then(response => {
-      this.setState({
-        //first .data is the actual data axios returns in a get request. second .data is to access the data from the actual giphy call
-        gifs: response.data.data
-      })
-    })
-    .catch(error => {
-      console.log('Error fetching and parsing data', error);
-    });
+    this.performSearch();
   };
 
-  performSearch = (query) => {
+  performSearch = (query = "cats") => {
     axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`)
     .then(response => {
       this.setState({

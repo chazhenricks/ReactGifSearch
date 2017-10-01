@@ -28,6 +28,18 @@ export default class App extends Component {
     });
   };
 
+  performSearch = (query) => {
+    axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`)
+    .then(response => {
+      this.setState({
+        //first .data is the actual data axios returns in a get request. second .data is to access the data from the actual giphy call
+        gifs: response.data.data
+      })
+    })
+    .catch(error => {
+      console.log('Error fetching and parsing data', error);
+    });
+  };
 
 
   // Example using Fetch to gather data from an API
@@ -50,7 +62,7 @@ export default class App extends Component {
         <div className="main-header">
           <div className="inner">
             <h1 className="main-title">GifSearch</h1>
-            <SearchForm />      
+            <SearchForm onSearch={this.performSearch}/>      
           </div>   
         </div>    
         <div className="main-content">
